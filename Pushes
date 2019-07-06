@@ -1,0 +1,21 @@
+sudo docker run --detach --publish 83:80 --name speedanalyzer --network=proxy --restart always --volume /speedanalyzer:/var/www/html/data -e CRONJOB_ITERATION=15 -l traefik.enable=true -l traefik.docker.network=proxy -l traefik.frontend.rule=Host:speed.axmelluzzo.com -l traefik.port=80 -l traefik.protocol=http roest/docker-speedtest-analyser:latest
+
+
+sudo docker run --detach --publish 8929:80 --publish 4443:443 --publish 2289:22 --name gitlab --network=proxy --restart always --volume /srv/gitlab/config:/etc/gitlab --volume /srv/gitlab/logs:/var/log/gitlab --volume /srv/gitlab/data:/var/opt/gitlab -l traefik.enable=true -l traefik.docker.network=proxy -l traefik.frontend.rule=Host:code.axmelluzzo.com -l traefik.port=80 -l traefik.protocol=http gitlab:latest
+
+
+
+
+
+{
+sudo docker run --detach --publish 3000:80 --name AxmHome --network=proxy --restart always --volume /AxmTraefik/www:/var/www/html/data -l traefik.enable=true -l traefik.docker.network=proxy -l traefik.frontend.rule=Host:home.axm-analytics.com -l traefik.port=80 -l traefik.protocol=http roest/docker-speedtest-analyser:latest
+
+
+then move files over
+scp -r index.html axmelluzzo@192.168.1.22:~/
+
+
+then from your local to the Docker machine:
+docker cp index.html AxmHome:/var/www/html
+docker cp bensound-endlessmotion.mp3 FishGame:/var/www/html
+}
