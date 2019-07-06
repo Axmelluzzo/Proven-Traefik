@@ -1,0 +1,49 @@
+debug = false
+checkNewVersion = true
+InsecureSkipVerify = true
+logLevel = "ERROR"
+
+defaultEntryPoints = ["https","http"]
+
+[web]
+  address = ":8080"
+  [web.auth.basic]
+  users = ["user:pass"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+  [entryPoints.https.tls]
+
+[file]
+[backends]
+  [backends.nextcloud]
+    [backends.nextcloud.servers.server1]
+      url = "http://192.168.1.26:80"
+
+[frontends]
+  [frontends.nextcloud]
+    backend = "nextcloud"
+    passHostHeader = true
+    [frontends.nextcloud.routes.example]
+      rule = "Host:cloud.axm-analytics.com"
+
+[retry]
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "axm-analytics.com"
+watch = true
+exposedByDefault = false
+
+[acme]
+email = "axmelluzzo@gmail.com"
+storage = "acme.json"
+entryPoint = "https"
+OnHostRule = true
+[acme.httpChallenge]
+entryPoint = "http"
